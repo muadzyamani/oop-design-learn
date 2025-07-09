@@ -556,3 +556,228 @@ Atul is working on an application that must communicate with a scientific instru
     > _Feedback: Correct. Communication with other devices is a common need._
 
 ---
+
+# 3. Use Cases and User Stories
+
+## Use cases
+
+*   **Purpose:** To shift focus from system-centric requirements to the user's perspective, describing how a user accomplishes a specific goal.
+*   **Three Essential Components:**
+    1.  **Title:** A short, active verb phrase describing the goal (e.g., "Heat Meal," "Heat Delayed Meal").
+    2.  **Primary Actor:** The entity (human or external system) that interacts with the application to achieve the goal.
+    3.  **Execution Flow (Scenario):** The steps needed to accomplish the goal, written in plain, non-technical language.
+*   **Formatting the Scenario:**
+    *   Can be a **single paragraph** describing the successful flow of events.
+    *   Can be a **numbered list** of individual steps.
+    *   The goal is readability and clarity, not strict formatting.
+*   **Handling Alternate Flows:**
+    *   Use cases typically describe the "sunny day" or successful scenario.
+    *   **Extensions** or alternative steps can be added to describe what happens when things go wrong (e.g., system can't identify a meal package).
+*   **Fully Dressed Use Cases:**
+    *   A more formal version that includes additional fields like preconditions, post-conditions, secondary actors, and stakeholders.
+    *   **Caution:** This level of formality can slow down progress and is often unnecessary for smaller projects. Casual, readable use cases are often better than incomplete formal templates.
+*   **Best Practices:**
+    *   Don't spend more than a few days on use cases in any project iteration.
+    *   It's okay to make assumptions and evolve use cases later.
+    *   **Recommended Reading:** *Writing Effective Use Cases* by Alistair Cockburn.
+
+## Identifying the actors
+
+*   **Definition:** An actor is anything that lives outside your application but interacts with it to accomplish a goal.
+*   **Types of Actors:**
+    *   **Human Actors:** Represented by stick figures. Can be specific roles (Mission Commander, Pilot) or more general (Player, User).
+    *   **External Systems:** Other computer systems or organizations the application needs to interact with. Represented by a box, often with `<<actor>>` written inside.
+*   **Brainstorming Actors:**
+    *   Think about different job titles or departments that might use the system.
+    *   Ask if the application needs to interact with other systems.
+*   **Primary vs. Secondary Actors:**
+    *   **Primary Actor:** The one who *initiates* the use case.
+    *   **Secondary Actor:** Other actors involved in the use case, often in a monitoring or reactive role.
+*   **Focus on Goals, Not Just Roles:**
+    *   The same person can be a different actor at different times, depending on their goal.
+    *   It may be more useful to define actors by their goal in a specific scenario (e.g., "the Cook," "the Monitor") rather than just their job title.
+
+## Identifying the scenarios
+
+*   **Goal-Oriented:** A use case scenario should describe a goal an actor can accomplish in a **single encounter**.
+    *   **Good Examples:** "Cook Meal," "Generate Reports." These are user-focused goals with multiple steps.
+    *   **Too Small:** "Turn on microwave." This is a step within a larger goal, not a goal itself.
+    *   **Too Broad:** "Feed entire crew." This involves multiple encounters.
+*   **Writing Style:**
+    *   Use an **active voice** (e.g., "Astronaut inserts meal package" instead of "The system is provided with the meal package by the astronaut").
+    *   Omit needless words and details.
+    *   **Avoid technical implementation details** like protocol names (HTTPS, JSON) or programming concepts. "System sends pager message" is sufficient.
+    *   **Avoid describing the user interface** (UI). Do not use words like "screen," "click," or "button." Focus on the user's *intention*.
+*   **Discovering Missed Use Cases:** Ask questions to prompt new goals or actors:
+    *   Who performs system administration (starting/stopping, backups, updates)?
+    *   Who manages users and security?
+    *   What happens if the system fails, and who reacts to it?
+    *   Is anyone looking at performance metrics or system activity logs?
+
+## Diagramming use cases
+
+*   **Purpose:** A UML Use Case Diagram shows the relationships between multiple actors and multiple use cases at a high level.
+*   **Key Elements:**
+    *   **System Boundary:** A box drawn around all the use cases to represent the application itself.
+    *   **Actors:** Stick figures (for humans) or boxes (for external systems) placed outside the system boundary. Primary actors are often on the left, secondary on the right.
+    *   **Use Cases:** Ellipses with the use case title inside.
+    *   **Association Lines:** Simple lines connecting an actor to a use case they are involved with. These lines do not have arrows and do not imply sequence.
+*   **Important Notes:**
+    *   This diagram is **not a substitute** for written use cases; they are complementary.
+    *   It is a simple overview and communication tool, not a detailed flow diagram. It can be useful for finding missing pieces of the overall picture.
+
+## User stories
+
+*   **Definition:** A short, simple description of a feature told from the perspective of the user. It focuses on their goal and the reason for it.
+*   **Format:** User stories are typically one or two sentences written on index cards, following this template:
+    > **As a** `<type of user>`, **I want** `<some goal>` **so that** `<some reason or benefit>`.
+*   **Example:** "As an astronaut, I want to heat up my food so that I can eat a warm meal."
+*   **Key Differences from Use Cases:**
+    *   **Purpose:** A user story is a **placeholder for a conversation**—a reminder to discuss a feature. A use case is a **record of a conversation** that has already happened, detailing the steps.
+    *   **Length & Detail:** User stories are very short and concise. Use cases can be much longer and more detailed.
+*   **Best Practices:**
+    *   Focus on user intent; do not include UI descriptions or technical details.
+    *   Avoid detailing alternate paths or exceptions.
+    *   Keep them short and sweet.
+*   **Relationship to Other Artifacts:** User stories, use cases, and functional requirements are all different tools. A project might use a combination of them, but not necessarily all three.
+*   **Recommended Reading:** *User Stories Applied for Agile Software Development* by Mike Cohn.
+
+## Challenge: Jukebox use cases
+
+*   **Scenario:** Extend the previous jukebox design challenge.
+*   **Task:** Write at least two use cases and two user stories for the space jukebox.
+*   **Goal:** Practice creating these artifacts, with the format and level of detail left up to you.
+
+## Solution: Jukebox use cases
+
+*   **Example Use Case 1: Play a Song**
+    *   **Actor:** User
+    *   **Scenario (Paragraph):** The system identifies the user. The user browses albums, selects an album, browses songs, and selects a song. The jukebox plays the selected song.
+*   **Example Use Case 2: Select Multiple Songs**
+    *   **Actor:** User
+    *   **Scenario (Numbered List):**
+        1. System identifies user.
+        2. User browses and selects a song.
+        3. System begins playing the song.
+        4. User continues browsing and selects a second song.
+        5. System adds the second song to a **play queue**.
+        6. System plays the second song after the first song finishes.
+    *   *Note: This use case introduces the new concept of a "play queue."*
+*   **Example User Stories:**
+    *   "As a user, I want my song to be added to the front of the long play queue so that I don't have to wait hours to hear it."
+    *   "As a user, I want to be identified without having to touch anything so I can use my hands to do other things."
+    *   "As a user, I want to sort and browse songs by artist so that I can listen to every song by ABBA."
+    *   "As the spaceship's commander, I want the ability to cancel other users' selections so I don't have to listen to disco all the way to the moon."
+*   **Key Takeaway:** The process of writing user stories and use cases is valuable because it can help uncover new requirements (like the need for a "commander" or "administrator" role).
+
+## Chapter Quiz
+
+**Question 1 of 12**
+When creating a use case diagram, what can you do to show each self-contained use case?
+
+*   draw a box around each case
+*   create a diagram for each use case
+*   **draw an ellipse around each use case**
+    > _Feedback: Correct_
+*   connect the use cases with lines, not arrows
+
+**Question 2 of 12**
+What is wrong with the following scenario description. "The pedals were used to control speed and direction."
+
+*   **It is passive and focuses on means instead of intent.**
+    > _Feedback: Correct. There should be an actor with a clear goal or intent._
+*   It does not explain how the pedals work.
+*   It is too short and lacks detail.
+*   It does not provide a desired speed and direction.
+
+**Question 3 of 12**
+What is the function of a use case diagram?
+
+*   It shows the relationship between use cases.
+*   It minimizes the number of actors required.
+*   **It connects actors to use cases.**
+    > _Feedback: Correct_
+*   It identifies duplicative or unnecessary use cases.
+
+**Question 4 of 12**
+Why are arrows and numbers not found in use case diagrams?
+
+*   Arrows and numbers are optional features of use case diagrams.
+*   **Sequence and direction are not critical at this stage.**
+    > _Feedback: Correct. Listing features and their connectivity is the function of a use case diagram._
+*   The use of arrows and numbers would conflict with the scenario definitions.
+*   Sequence and direction are not important in object-oriented programming.
+
+**Question 5 of 12**
+What is typically written on index cards, and describes a small scenario from a user perspective?
+
+*   use case diagram
+*   UML diagram
+*   use case
+*   **user story**
+    > _Feedback: Correct_
+
+**Question 6 of 12**
+User stories are _____ than use cases.
+
+*   more detailed and structured
+*   **shorter and less detailed**
+    > _Feedback: Correct_
+*   longer and less formal
+*   more anecdotal and personal
+
+**Question 7 of 12**
+Marge is working on a short and simple project involving inventory maintenance. Why should she write short use cases?
+
+*   They are a minimum for project definition, but full use cases would be better.
+*   They are really window dressing that will satisfy project administrators.
+*   They are useful for documenting effort and billing for work on the project.
+*   **They help identify problems but do not create the confusing work of full use cases.**
+    > _Feedback: Correct. Casual use cases can be very helpful, but the use cases should be more fully developed for larger projects._
+
+**Question 8 of 12**
+Which sentence is most appropriate for a use case scenario?
+
+*   Contrast and brightness are set by the user to achieve the most pleasing levels for indoor viewing.
+*   **User adjusts contrast and brightness controls.**
+    > _Feedback: Correct_
+*   The users are prompted to employ an iterative algorithm for contrast and brightness adjustment.
+*   Most users start by adjusting brightness to see the image better, and then adjust contrast, and then adjust brightness again, and so on.
+
+**Question 9 of 12**
+What is the role of the primary actor in a use case?
+
+*   to decide if the scenario was a success
+*   **to interact with the application to achieve the goal**
+    > _Feedback: Correct_
+*   to determine how many scenarios to create from the use case
+*   to see if the use case can be used with multiple actors
+
+**Question 10 of 12**
+When are fully fleshed out cases most appropriate?
+
+*   for time-limited projects
+*   for single-user projects
+*   **for large, complex projects**
+    > _Feedback: Correct_
+*   for simple, small projects
+
+**Question 11 of 12**
+You are creating a use case for an application that controls the dispensing of gasoline at a pump. Who is the primary actor in this scenario?
+
+*   the company that supplies the gasoline
+*   **the customer who uses the pump**
+    > _Feedback: Correct_
+*   the owner of the gas station who bought the pump
+*   the designer of the application
+
+**Question 12 of 12**
+What distinguishes primary actors?
+
+*   outcome evaluation
+*   task termination
+*   **application initiation**
+    > _Feedback: Correct_
+*   information routing
+
+---
