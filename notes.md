@@ -428,3 +428,131 @@ Static polymorphism uses method **\_**.
 - inheritance
 
 ---
+
+# 2. Requirements
+
+## Defining requirements
+
+*   **Core Purpose:** The first step in any design process is to gather requirements to understand what the application needs to do and what problem it's solving.
+*   **Functional Requirements:**
+    *   **Definition:** These describe what the application *must do*; its necessary features and capabilities.
+    *   **Phrasing:** Often start with "The system must..."
+    *   **Example (Space Microwave):**
+        *   The system must heat food.
+        *   The system must allow the user to set a time.
+        *   The system must notify the user when food is ready.
+*   **Non-functional Requirements:**
+    *   **Definition:** These place constraints on *how* the application should function. They describe the required characteristics or "-ilities" (maintainability, reliability, usability, etc.).
+    *   **Phrasing:** Often describe how the system "should be."
+    *   **Examples:**
+        *   Compliance with regulations (e.g., for banking or healthcare data).
+        *   Performance (e.g., response time, number of simultaneous users).
+        *   Support (e.g., what happens if there's an issue at 2 a.m.).
+        *   Security.
+*   **Common Mistakes and Best Practices:**
+    *   **Understand the "Why":** Don't just accept a list of requirements from a client. Take the time to understand *why* they want something to ensure you are building what they truly need.
+    *   **Avoid Implementation Details:** Requirements should be about *what* the system does, not *how* it does it. Avoid object-oriented terms like "class," "object," or "inheritance" at this stage.
+    *   **Focus on Minimum Viable Product (MVP):** On the first pass, capture the absolute minimum set of requirements—the bare necessities. Avoid "nice to have" or "dream" features.
+    *   **Be Specific, but Not Exhaustive:** Write things down clearly. However, it's okay if the first pass isn't perfect; requirements can be updated later. The initial goal is to get something on paper.
+
+## FURPS+ requirements
+
+*   **Purpose:** FURPS+ is a model and acronym used as a checklist to classify and consider key software quality attributes when defining requirements.
+*   **FURPS Categories:**
+    *   **F - Functionality:** The core features and capabilities of the application.
+    *   **U - Usability:** How easy and intuitive the application is to use (e.g., visual design, documentation).
+    *   **R - Reliability:** Acceptable downtime, predictability of failures, and system recovery.
+    *   **P - Performance:** Response time, throughput, and limits on system resources.
+    *   **S - Supportability:** How easily the application can be tested, extended, serviced, installed, and configured.
+*   **The "+" Extension:**
+    *   **Design:** Constraints on how the software must be built (e.g., must use a specific database).
+    *   **Implementation:** Constraints on the development process (e.g., must be written in a certain language or follow specific standards).
+    *   **Interface:** Requirements for interfacing with external systems (not the user interface).
+    *   **Physical:** Constraints related to the hardware where the application will be deployed.
+*   **Usage Notes:**
+    *   FURPS+ is a **prompt** to help you think about key areas. Not all categories will be relevant to every project.
+    *   It is acceptable to mark categories as "Not Applicable" or "To Be Determined."
+*   **Further Reading:**
+    *   *Software Requirements* by Karl Wiegers.
+    *   *Mastering the Requirements Process* by Suzanne and James Robertson.
+
+## Challenge: Jukebox requirements
+
+*   **Scenario:** Design a jukebox for astronauts on a moon shuttle.
+*   **Core Functional Rules:**
+    1.  The jukebox is free to use.
+    2.  A user can select an album and then choose individual songs from it to be played.
+    3.  To prevent one person from dominating, if an astronaut adds more than three songs in a row to the queue, another astronaut who wants to play a song can jump ahead in line.
+*   **Task:**
+    *   Write a set of requirements for the jukebox.
+    *   Aim for at least **three functional** and **three non-functional** requirements.
+*   **Hints:**
+    *   Use the FURPS+ model to inspire ideas for requirements.
+    *   The problem is intentionally vague to encourage the process of thinking through and discovering requirements. There is no single correct answer.
+
+## Solution: Jukebox requirements
+
+*   **Approach:** The solution uses the FURPS model as a guide to generate requirements.
+*   **Example Functional Requirements (F):**
+    *   The system must maintain a music library of albums and songs.
+    *   The system must allow users to browse albums and songs.
+    *   The system must allow users to select *individual* songs (preventing playing full albums).
+    *   The system must maintain a queue of songs to play.
+    *   The system must play music.
+    *   The system must allow the user to sort by artist. (Note: Phrased to be implementation-agnostic, not "must have a button to sort").
+    *   The system must identify individual users and track their plays. (Note: Also implementation-agnostic; doesn't specify *how* to identify them).
+*   **Example Non-functional Requirements (URPS):**
+    *   **Usability:** The system should be intuitive to use in zero-gravity (e.g., have large buttons or voice commands).
+    *   **Reliability:** The system should be available 24/7.
+    *   **Performance:** The system should be low-power to avoid impacting other critical spacecraft systems.
+    *   **Supportability:** The system should have an updatable music library.
+*   **Key Takeaway:** The provided requirements are not a complete set but a starting point. The goal of the exercise is to get comfortable with the process of thinking about and writing down requirements.
+
+## Chapter Quiz
+
+**Question 1 of 5**
+What is the first step in defining requirements for an application?
+
+*   **determining what the application must have and do**
+    > _Feedback: Correct_
+*   creating a superclass for all of the objects in the application
+*   choosing which classes should be used to create the objects
+*   selecting the group of test users
+
+**Question 2 of 5**
+Which is a valid nonfunctional requirement?
+
+*   The system should execute a wash cycle in under 20 minutes.
+*   **The system should be updated annually.**
+    > _Feedback: Correct_
+*   The system should automatically register new users.
+*   The system should display 2048 x 2048 images.
+
+**Question 3 of 5**
+A requirement that all onscreen text must be at least 20-point font size is an example of which FURPS quality?
+
+*   functionality
+*   **usability**
+    > _Feedback: Correct_
+*   performance
+*   reliability
+
+**Question 4 of 5**
+In which category does extensibility of an application reside?
+
+*   functionality
+*   usability
+*   **supportability**
+    > _Feedback: Correct_
+*   reliability
+
+**Question 5 of 5**
+Atul is working on an application that must communicate with a scientific instrument and a data archiving system. Into which category would these requirements fall in the FURPS+ model?
+
+*   design
+*   physical requirements
+*   implementation
+*   **interface**
+    > _Feedback: Correct. Communication with other devices is a common need._
+
+---
