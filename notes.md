@@ -781,3 +781,202 @@ What distinguishes primary actors?
 *   information routing
 
 ---
+
+# 4. Domain Modeling
+
+## Identifying the objects
+
+*   **Purpose:** To create a conceptual model by identifying the most important objects in the application and their relationships. This step transitions from analysis (what to do) to design (how to do it).
+*   **Technique: Noun Identification**
+    1.  Go through use cases, user stories, and other written requirements.
+    2.  Highlight or list all of the **nouns**.
+    3.  Initially, don't analyze or judge the words. The goal is to gather a raw list of potential objects.
+*   **Refining the List:**
+    *   **Remove Duplicates:** Combine nouns that refer to the same concept (e.g., "it" referring to "asteroid").
+    *   **Identify Attributes:** Some nouns might actually be attributes of other objects (e.g., "offscreen" could be an attribute of an "area" class). Remove these from the object list for now.
+    *   **Questionable Objects:** If you are unsure whether a noun should be an object or an attribute (e.g., "direction"), it's better to **keep it** for now. It's easier to remove it later than to add it back in.
+    *   **Remove "System":** Avoid making "system" an object. This often leads to a procedural mindset where one central object controls everything.
+*   **Result:** A preliminary list of potential objects, which forms the beginning of a conceptual model. These can be represented as simple boxes with names.
+
+## Identifying class relationships
+
+*   **Purpose:** To indicate the main relationships or associations between the identified objects in the conceptual model.
+*   **Technique:**
+    1.  Draw lines between objects that have a relationship or interaction.
+    2.  Refer back to use cases and user stories if the relationships aren't immediately obvious.
+*   **Describing Relationships (Optional but useful):**
+    *   Add a short, active verb phrase to the line to describe the relationship (e.g., "Spaceship *fires* Missile," "Player *steers* Asteroid").
+*   **Describing Multiplicity (Optional):**
+    *   Use UML notation to indicate how many objects are involved in a relationship (e.g., one-to-one, one-to-many `1..*`).
+    *   Only add this detail if it's interesting or important enough to show on the diagram.
+*   **Benefit:** Detailing these relationships makes it easier to understand which objects interact with each other, which helps in identifying necessary behaviors.
+
+## Identifying class responsibilities
+
+*   **Purpose:** To determine the responsibilities (behaviors) of each conceptual object, which helps solidify which ones will become actual classes.
+*   **Technique: Verb Identification**
+    1.  Go back to the use cases and user stories.
+    2.  Pick out all the **verbs and verb phrases**. This will generate a starting list of potential responsibilities.
+    3.  This list will need refinement (combining, splitting, or removing responsibilities).
+*   **Assigning Responsibilities:**
+    *   **Core Principle:** An object should be responsible for itself. It should manage its own state and perform its own actions.
+    *   **Example:** The `Player` initiates the action of steering, but the `Asteroid` object should have the responsibility to actually move itself and change its own state. The `Player` *tells* the `Asteroid` what to do; it doesn't do it for the `Asteroid`.
+*   **The "God Object" Anti-Pattern:**
+    *   Avoid giving too much knowledge or too many responsibilities to a single object (like a `Player` or `System` object). This is a common mistake that leads to procedural-style code.
+    *   Seeing phrases like "System spawns spaceship" should be interpreted as "some part of the system spawns the spaceship." The responsibility should be distributed.
+    *   A central "master" object that controls everything else is a sign of a poor design. Distribute responsibilities among objects to make the application more maintainable.
+
+## CRC cards
+
+*   **Definition:** CRC stands for **C**lass, **R**esponsibility, **C**ollaboration. CRC cards are a simple, physical tool for object-oriented design.
+*   **Format:**
+    *   Drawn on index cards.
+    *   **Class:** The name of the class is at the top.
+    *   **Responsibilities:** A list of what the class needs to do, occupying the left two-thirds of the card.
+    *   **Collaborators:** A list of other classes it interacts with, on the right-hand side.
+*   **Process:**
+    1.  Use the nouns from your requirements to identify potential classes and create a card for each.
+    2.  Use the verbs to identify responsibilities and list them on the appropriate card.
+    3.  As you work, identify which other classes are needed to fulfill a responsibility and list them as collaborators.
+*   **Benefits of Physical Cards:**
+    *   **Simplicity:** Easy to create, discuss, and throw away if you change your mind.
+    *   **Collaboration:** Spreading them out on a table encourages discussion and helps in discovering natural collaborations as you physically group related cards.
+    *   **Constraint:** If you need more than one card for a single class, it's a strong sign that the class has too much responsibility and may need to be redesigned.
+*   **End Goal:** Whether you use CRC cards or a conceptual diagram, this phase should end with a clear understanding of the initial set of classes, their core responsibilities, and their relationships.
+
+## Challenge: Jukebox conceptual model
+
+*   **Scenario:** Extend the previous jukebox design challenge.
+*   **Task:** Create a conceptual model for the space jukebox.
+    1.  Identify nouns and verb phrases from the use cases/user stories to find potential objects and responsibilities.
+    2.  Determine where responsibilities should reside and the relationships between objects.
+*   **Format:** The solution can be a conceptual model diagram (boxes and lines), a stack of CRC cards, or a hybrid approach.
+
+## Solution: Jukebox conceptual model
+
+*   **Step 1: Identify Nouns (Potential Objects)**
+    *   From the use cases and user stories, a list of nouns is gathered: `system`, `user`, `library`, `album`, `list`, `song`, `queue`, `commander`, `ability`, `selection`, `disco`, `moon`.
+    *   **Cleanup:**
+        *   Remove `system` (to avoid a god object).
+        *   Remove irrelevant nouns like `disco` and `moon`.
+        *   Remove `ability` (it's a behavior, not an object).
+        *   Combine duplicates (`selection` is covered by `song`; `list` is covered by `album`).
+        *   Rename `commander` to the more generic `admin`.
+    *   **Final Object List:** `User`, `Library`, `Album`, `Song`, `Queue`, `Admin`.
+
+*   **Step 2: Identify Verbs (Potential Responsibilities)**
+    *   From the same sources, verb phrases are gathered: `identifies user`, `browses library`, `selects an album`, `plays a selected song`, `add song to queue`, `cancel other user selections`, etc.
+
+*   **Step 3: Assign Responsibilities and Define Relationships**
+    *   A hybrid model of CRC cards on a whiteboard with lines for relationships is used.
+    *   **Library:**
+        *   *Responsibility:* `display albums`
+        *   *Relationship:* `User` *browses* `Library`; `Library` *contains* `Album`s.
+    *   **Album:**
+        *   *Responsibility:* `display songs`, `select song`
+    *   **Song:**
+        *   *Responsibility:* `play song`
+    *   **Queue:**
+        *   *Responsibilities:* `add song`, `get next song`, `remove song`, `identify user`.
+    *   **Key Design Decision:** The responsibility to `identify user` is placed in the `Queue` object. Why? Because the `Queue` is the object that *cares about* the user's identity in order to reorder songs correctly. This avoids creating a central `System` object for this task.
+
+## Chapter Quiz
+
+**Question 1 of 10**
+How can one avoid assigning too many responsibilities to a single object?
+
+*   Create two system-like objects.
+*   Reduce the overall number of responsibilities.
+*   Assign the most responsibility to the system.
+*   **Require objects to take care of themselves to a greater extent.**
+    > _Feedback: Correct_
+
+**Question 2 of 10**
+What common problem should new programmers avoid when designing a program?
+
+*   **creating a god object**
+    > _Feedback: Correct_
+*   distributing responsibilities among different classes
+*   assigning properties to objects
+*   looking for verbs to identify potential class responsibilities
+
+**Question 3 of 10**
+In addition to responsibilities, which should be listed on CRC cards?
+
+*   parents
+*   **interacting classes**
+    > _Feedback: Correct_
+*   attributes
+*   subclasses
+
+**Question 4 of 10**
+Which design tool contains the same information as a conceptual object diagram?
+
+*   user stories
+*   an object list
+*   use cases
+*   **CRC cards**
+    > _Feedback: Correct_
+
+**Question 5 of 10**
+After analysis and use cases are completed, what is the first step in the design phase of a project?
+
+*   deciding how to program the application
+*   creating user stories
+*   **creating a conceptual model**
+    > _Feedback: Correct_
+*   defining the requirements
+
+**Question 6 of 10**
+When is there a relationship between two objects?
+
+*   when two objects are instantiated from the same class
+*   **when one object depends on or affects the other object**
+    > _Feedback: Correct_
+*   when one object replaces the other object
+*   when the objects are very similar in attributes
+
+**Question 7 of 10**
+When diagramming relationships between objects, what is the UML notation that represents one or more objects?
+
+*   **1…\***
+    > _Feedback: Correct_
+*   0->1
+*   ---1
+*   1…1
+
+**Question 8 of 10**
+How can you identify candidates for objects?
+
+*   by listing all of the verbs in the user stories
+*   by listing all of the scenarios
+*   by listing all of the actors in the use cases
+*   **by listing all of the nouns in the user stories**
+    > _Feedback: Correct. Objects are nouns; they are things._
+
+**Question 9 of 10**
+In the following CRC card, what does `card` represent?
+```
+Wallet
+receive                        cash
+receive                        card
+withdraw                     cash
+withdraw                     card
+```
+*   a case
+*   **a collaborator**
+    > _Feedback: Correct. The wallet interacts with the card and cash supplies._
+*   a responsibility
+*   an attribute
+    > _Feedback: Incorrect. CRC cards do not necessarily contain attributes._
+
+**Question 10 of 10**
+Which words in the following list are candidates for objects: trumpet, clean, enrage, leaf, tree, collapse, active, or lively?
+
+*   leaf and tree
+*   **trumpet, leaf, and tree**
+    > _Feedback: Correct_
+*   clean, active, and lively
+*   clean, collapse, and enrage
+
+---
