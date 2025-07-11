@@ -980,3 +980,377 @@ Which words in the following list are candidates for objects: trumpet, clean, en
 *   clean, collapse, and enrage
 
 ---
+
+# 5. Class Diagrams
+
+## Creating class diagrams: Attributes
+
+*   **Purpose:** To create a formal UML class diagram to visually represent the classes identified in the conceptual model.
+*   **Class Naming:**
+    *   Use the singular form (e.g., `Asteroid`, not `Asteroids`).
+    *   Use an uppercase first letter (PascalCase or UpperCamelCase).
+*   **Attribute Naming:**
+    *   Use a consistent naming convention, like camelCase (e.g., `shieldStrength`, `callSign`).
+*   **Defining Attributes:**
+    *   **Name:** The name of the attribute.
+    *   **Data Type (Optional):** You can suggest a data type by adding a colon after the name (e.g., `callSign: String`). Don't get hung up on the exact type (e.g., 16-bit vs. 32-bit integer); the general type is sufficient for the design phase.
+    *   **Default Value (Optional):** You can specify a default value using an equals sign after the data type (e.g., `shieldActive: Boolean = true`).
+*   **Abstraction is Key:** At this stage, you don't need to decide on every implementation detail. For example, a `position` attribute could be a custom `Coordinate` class, two separate `x` and `y` attributes, or a tuple. The diagram just needs to convey the concept.
+
+## Creating class diagrams: Behaviors
+
+*   **Purpose:** To add behaviors (methods) to the class diagram, based on the responsibilities identified in the conceptual model or CRC cards.
+*   **Method Naming:**
+    *   Use camelCase.
+    *   Name them as short verb phrases (e.g., `reduceShield`, `getShieldStrength`).
+    *   It's common practice to use "get" and "set" prefixes for methods that retrieve or modify attributes.
+*   **Defining Methods:**
+    *   **Parameters:** List any input parameters inside parentheses `()`.
+    *   **Return Type (Optional):** Indicate the return type with a colon after the parentheses (e.g., `getShieldStrength(): Integer`).
+*   **Visibility (Encapsulation):**
+    *   Use plus (`+`) for **public** members (accessible by other objects).
+    *   Use minus (`-`) for **private** members (only accessible from within the class itself).
+    *   **Rule:** Leave as many attributes and methods private as possible. Only make something public if another object absolutely needs to use it.
+*   **Focus on Behavior, Not Just Data:**
+    *   A common mistake is to jump to creating classes by only listing their attributes (data). This is the wrong initial focus.
+    *   If you find your classes have lots of attributes but few behaviors, you are likely thinking of them as simple data structures, not objects. Revisit the responsibilities.
+    *   The focus should be on **what objects do**, not just what they are.
+
+## Converting class diagrams into code
+
+*   **Purpose:** To show how the high-level concepts in a UML class diagram can be translated into various object-oriented programming languages, despite differences in syntax.
+*   **Example: `Spaceship` Class**
+    *   **UML:**
+        *   Attributes: `+ callSign: String`, `- shieldStrength: Integer`
+        *   Methods: `+ fireMissile(): String`, `+ reduceShield(amount: Integer)`
+    *   **Java/C#:** Use `public class Spaceship` with curly braces. Keywords `public` and `private` control visibility. Instance variables are declared inside the class.
+    *   **Swift:** Also uses curly braces but has different syntax for variable declaration (`var callSign: String`).
+    *   **Python:** Uses indentation instead of curly braces. Instance variables are typically declared inside a special `__init__` method. Python relies on naming conventions (e.g., an underscore prefix `_shieldStrength`) to indicate a variable should be treated as private.
+    *   **Ruby:** Also uses indentation. The `@` symbol indicates an instance variable.
+*   **Key Takeaway:** While syntax varies, the core concepts of classes, attributes, methods, and visibility are consistent across most OO languages.
+
+## Instantiating classes
+
+*   **Concept:** A class is a blueprint. To use it, you must **instantiate** it to create an object (an instance of the class).
+*   **Instantiation Keyword:** Many languages (Java, C#, C++, Ruby) use the keyword `new`. Others (Python, Swift) do not.
+*   **The Constructor:**
+    *   A special method that is automatically called when an object is instantiated.
+    *   Its purpose is to initialize the object and set its initial state.
+    *   In many languages (Java, C#), the constructor has the same name as the class and has no return type.
+    *   Using a constructor ensures an object is created in a valid, meaningful state, rather than relying on potentially problematic default values (like `null` or `0`).
+    *   In UML, a constructor is represented as a method with the same name as the class.
+
+## Class with multiple constructors
+
+*   **Method Overloading:** Most languages allow a class to have multiple methods with the same name, as long as they have a different set of input parameters. This is called **overloading**.
+*   **Multiple Constructors:** You can apply overloading to constructors to provide different ways of instantiating an object.
+    *   **Example:** One `Spaceship()` constructor with no parameters (a "default constructor") that creates a "nameless ship," and a second `Spaceship(name: String)` constructor that takes a name as input.
+*   **Benefit:** Gives flexibility in how objects are created and is crucial for ensuring complex objects are not created in an invalid state.
+*   **Destructors:**
+    *   The opposite of a constructor; a method that gets called when an object is destroyed.
+    *   Used to release resources the object might be holding (e.g., closing a file or a database connection).
+    *   Languages with garbage collection often use a "finalizer" instead, but the concept is the same.
+
+## Static attributes and methods
+
+*   **Instance Variables:** Each object (instance) gets its own separate copy of an instance variable. Changing it in one object does not affect others.
+*   **Static Variables (or Class/Shared Variables):**
+    *   There is only **one copy** of a static variable, which is **shared** across all objects of that class.
+    *   If one object changes the static variable, the change is visible to all other objects of that class.
+    *   This is useful for values that should be the same for all instances, like a game's `difficulty` setting.
+    *   It is *not* a global variable; it is still encapsulated within the class.
+*   **Static Methods:**
+    *   Like static variables, there is only one copy of a static method, belonging to the class itself, not to any particular instance.
+    *   They can only access static variables, not instance variables.
+*   **Accessing Static Members:** Static members are accessed using the **class name**, not an instance name (e.g., `Spaceship.toughness`, not `myShip.toughness`).
+*   **UML Notation:** Static members (attributes and methods) are typically denoted with an **underline**.
+
+## Challenge: Jukebox class diagrams
+
+*   **Scenario:** Extend the jukebox design challenge.
+*   **Task:** Create a UML class diagram based on the previously created conceptual model.
+*   **Goal:**
+    *   Think about the attributes and methods each class needs to accomplish its responsibilities.
+    *   Make assumptions where necessary.
+    *   This is an open-ended challenge with many possible solutions.
+
+## Solution: Jukebox class diagrams
+
+*   **Approach:** Convert the conceptual model objects (`Song`, `Album`, `Library`, `Queue`, `User`, `Admin`) into formal class diagrams.
+*   **`Song` Class:**
+    *   Attributes: `- title: String`, `- artist: String`. (Private)
+    *   Methods: `+ getTitle(): String`, `+ getArtist(): String`, `+ play()`.
+*   **`Album` Class:**
+    *   Attributes: `- title: String`, `- songs: Song[1..*]`. (A collection of one or more Song objects).
+    *   Methods: `+ getTitles(): String[]`, `+ getSong(title: String): Song`.
+*   **`Library` Class:**
+    *   Similar to the `Album` class, but it contains a collection of `Album` objects instead of `Song` objects.
+*   **`Queue` Class:**
+    *   A collection of songs, but with different responsibilities than an `Album`.
+    *   Methods: `+ addSong(song: Song, userId: String)`, `+ getNextSong(): Song`, `+ removeSong(song: Song)`.
+*   **`User` and `Admin` Classes:**
+    *   `User` class is given an `id` attribute and a `getId()` method.
+    *   The `addSong` method in the `Queue` class is updated to take the user's ID as a parameter. This fulfills the queue's responsibility to "identify the user" without needing a separate method for it.
+    *   The `Admin` class is given an `id` and methods like `createNewUser()` and `manageQueue()`.
+*   **Key Takeaway:** This is just one of many possible ways to design the system. The process involves making logical assumptions to translate high-level responsibilities into concrete attributes and methods.
+
+## Chapter Quiz
+
+**Question 1 of 22**
+In which language is the following class specification written?
+```python
+class Dog():
+      def __init__(self):
+#instance variables
+      self.breed=""
+       self.weight=50
+#methods
+```
+*   C#
+*   **Python**
+    > _Feedback: Correct. Python does not use curly braces nor terminal semicolons._
+*   Swift
+*   Ruby
+
+**Question 2 of 22**
+Instantiating a class in many languages looks similar to that in C++, `DinnerPlate *myPlate = new DinnerPlate()`. What is the main difference between Python and Swift for achieving the same goal?
+
+*   the use of colons
+*   the absence of =
+*   the use of terminal semicolons
+*   **the absence of the word new**
+    > _Feedback: Correct. Swift uses `let`, but neither Swift nor Python use `new`._
+
+**Question 3 of 22**
+A class Dog has the following constructors:
+```java
+public Dog() 
+public Dog(String breed)
+public Dog(int weight)
+```
+How would you instantiate a Dog with the weight set in Java?
+
+*   `Dog Dog = new Dog(Fido)`
+*   **`Dog Fido = new Dog(63);`**
+    > _Feedback: Correct. The dog's weight is set to 63._
+*   `Dog Fido = new Dog(Mutt);`
+*   `Dog Fido = Dog(63);`
+
+**Question 4 of 22**
+Which languages require the use of static to declare class-wide variables or methods?
+
+*   **Java and C#**
+    > _Feedback: Correct. The word `static` can be confusing, because it implies that there is only one instance._
+*   Ruby and Swift
+*   Python and C++
+*   all of these answers
+
+**Question 5 of 22**
+Which class diagram correctly specifies data types and default values?
+
+*   ```
+    Asteroid
+    size, Integer: 5
+    position, Coordinate:(0.5,0.5,0.6)
+    velocity, Coordinate:(1,0,0)
+    ```
+*   ```
+    Asteroid
+    size: Integer: 5
+    position: Coordinate:(0.5,0.5,0.6)
+    velocity: Coordinate:(1,0,0)
+    ```
+*   ```
+    Asteroid
+    size, Integer, 5
+    position, Coordinate,(0.5,0.5,0.6)
+    velocity, Coordinate,(1,0,0)
+    ```
+*   **```
+    Asteroid
+    size: Integer=5
+    position: Coordinate=(0.5,0.5,0.6)
+    velocity: Coordinate=(1,0,0)
+    ```**
+    > _Feedback: Correct. It helps to have standard syntax even in UML, as it makes later jobs easier._
+
+**Question 6 of 22**
+Which is the function of a finalizer or destructor?
+
+*   to delete a variable name
+*   to hold space, even after an object is no longer being used
+*   to reset an attribute value
+*   **to relinquish resources that are no longer needed**
+    > _Feedback: Correct_
+
+**Question 7 of 22**
+How would you declare a class variable in Ruby named maxScore?
+
+*   **`@@maxScore`**
+    > _Feedback: Correct_
+*   `public maxScore`
+*   `public static maxScore`
+*   `@maxScore`
+    > _Feedback: Incorrect_
+
+**Question 8 of 22**
+A class diagram contains the following behavior specifications. Which data type is returned by the `accelerate()` behavior?
+```
+move(Direction)
+accelerate(Acceleration): Velocity
+setPosition(Coordinate)
+explodePieces(Integer)
+```
+*   **Velocity**
+    > _Feedback: Correct. The return data type is indicated after the colon._
+*   Integer
+*   Acceleration
+*   Coordinate
+
+**Question 9 of 22**
+A class diagram contains the following behavior specifications. The `explodePieces()` behavior breaks up an object into a number of pieces. What is the data type for that number? The answer will take the place of the '???'.
+```
+move(Direction)
+accelerate(Acceleration): Velocity
+setPosition(Coordinate)
+explodePieces(???)
+```
+*   Acceleration
+*   Direction
+    > _Feedback: Incorrect. This is the data type for the `move()` argument._
+*   **Integer**
+    > _Feedback: Correct. An argument is contained within parentheses._
+*   Coordinate
+
+**Question 10 of 22**
+For which case would the use of a static attribute be appropriate?
+
+*   the color of each house in a small neighborhood
+*   **the weather conditions for each house in a small neighborhood**
+    > _Feedback: Correct_
+*   the number of people in each house in a small neighborhood
+*   the lot size for each house in a small neighborhood
+
+**Question 11 of 22**
+In which language would you find the following declaration of an instance variable?
+```swift
+private var _size: Int
+```
+*   Java
+*   Python
+*   C#
+*   **Swift**
+    > _Feedback: Correct. The use of `var` is unique._
+
+**Question 12 of 22**
+What other terminology is used for variables that are declared static?
+
+*   unchanging
+    > _Feedback: Incorrect. It is a variable, so it can change._
+*   **class or shared**
+    > _Feedback: Correct. Class or shared will imply that there is one variable used across the whole class._
+*   discrete or stepped
+*   permanent
+
+**Question 13 of 22**
+What does the value (0.5,0.5,0.5) indicate in the class diagram specification `position: Coordinate = (0.5,0.5,0.5)`?
+
+*   a prohibited value of the position attribute
+*   the size of the position array
+*   an increment of the position attribute value
+*   **a default value of the position attribute**
+    > _Feedback: Correct_
+
+**Question 14 of 22**
+In a UML class diagram, how would you write an attribute called "name" that is a String data type and has a default value of Jane?
+
+*   `String Jane = name`
+    > _Feedback: Incorrect_
+*   `String Jane as name`
+*   `Jane: String = name`
+*   **`name: String = "Jane"`**
+    > _Feedback: Correct_
+
+**Question 15 of 22**
+In the class diagram specification `setSize(Integer):Integer`, to what do the integer specifications refer?
+
+*   the name of the attribute to be evaluated or set
+*   the amount of memory to be reserved for storage
+*   **the data types for the argument, and return of the function setSize**
+    > _Feedback: Correct_
+*   the default values for the function setSize
+
+**Question 16 of 22**
+Which line of Java code declares a public method called getName that accepts no arguments and returns a String value?
+
+*   **`public String getName()`**
+    > _Feedback: Correct_
+*   `private String getName()`
+*   `public getName(void)`
+*   `public void getName(String)`
+
+**Question 17 of 22**
+Which line of Java code will instantiate a new object named Student from the Person class?
+
+*   `new Student = Person(Person)`
+*   `Student Person = new Person()`
+    > _Feedback: Incorrect_
+*   `new Person = Person(Student)`
+*   **`Person Student = new Person()`**
+    > _Feedback: Correct_
+
+**Question 18 of 22**
+Which is the purpose of a constructor?
+
+*   **to initialize attribute values**
+    > _Feedback: Correct_
+*   to test all behaviors associated with a class
+*   to reserve memory
+*   to link attributes into shared storage
+
+**Question 19 of 22**
+The class Person has the following constructors:
+```java
+public Person()
+public Person(String name)
+public Person(int age)
+```
+Which one will be called when a new person is created with the following command?
+```java
+Person Steve = new Person(39)
+```
+*   **`Person(int age)`**
+    > _Feedback: Correct_
+*   `Person(String name)`
+*   `Person()`
+*   all of the constructors will be called
+
+**Question 20 of 22**
+Which restrictions apply to the use of static methods?
+
+*   They cannot act on static variables, but only instance variables.
+*   They cannot change the values of any variables.
+*   They can only act on global variables.
+*   **They cannot act on instance variables, but only static variables.**
+    > _Feedback: Correct. Static methods can be applied to class-wide variables._
+
+**Question 21 of 22**
+What does it mean if a class attribute is private?
+
+*   It can be accessed from other classes.
+*   The attribute cannot be changed.
+*   **It can only be accessed from within the class.**
+    > _Feedback: Correct_
+*   The attribute is only visible to the programmer that created it.
+
+**Question 22 of 22**
+How do you declare a private variable in Python?
+
+*   **Python does not have private or public variables.**
+    > _Feedback: Correct_
+*   Use a minus sign before the variable name.
+*   Use a leading underscore in the variable name.
+    > _Feedback: Incorrect_
+*   All variables are private in Python.
+
+---
