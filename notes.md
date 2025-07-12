@@ -1354,3 +1354,274 @@ How do you declare a private variable in Python?
 *   All variables are private in Python.
 
 ---
+
+# 6. Inheritance and Composition
+
+## Identifying inheritance situations
+
+*   **Definition:** Inheritance allows a subclass (or child class) to inherit the attributes and methods of a superclass (or parent class), enabling code reuse and easier maintenance.
+*   **The "is a" Test:** The easiest way to identify an inheritance relationship is to use the phrase "is a" (or "is a kind of" / "is a type of").
+    *   **Valid:** "A `Starfighter` is a `Spaceship`." "A `CargoShuttle` is a type of `Spaceship`." This suggests `Starfighter` and `CargoShuttle` can be subclasses of a `Spaceship` superclass.
+    *   **Invalid:** "A `CargoShuttle` is a `Starfighter`" (no). "Cargo is a `CargoShuttle`" (no). This indicates a different relationship, likely a "has a" relationship.
+*   **Process:**
+    1.  Look for classes with common attributes and methods.
+    2.  Extract these common elements into a new, more general superclass.
+    3.  The original classes become subclasses that inherit from the new superclass.
+*   **UML Notation:** Inheritance is shown with a solid line and a large, open, wedge-shaped arrow pointing from the subclass to the superclass.
+*   **Method Overriding:** A subclass can provide its own unique implementation for a method that it inherited from its superclass.
+*   **Caution:** New developers often over-emphasize inheritance. Don't force it; inheritance opportunities usually announce themselves naturally.
+
+## Using inheritance
+
+*   **Purpose:** To show how the concept of inheritance is implemented with slightly different syntax across various programming languages.
+*   **Language Syntax for Inheritance:**
+    *   **Java:** `class CargoShuttle extends Spaceship`
+    *   **C# / C++ / Swift:** `class CargoShuttle : Spaceship`
+    *   **Python:** `class CargoShuttle(Spaceship):`
+    *   **Ruby:** `class CargoShuttle < Spaceship`
+*   **Calling Superclass Methods:** It's common for a subclass to need to call a method from its parent.
+    *   Most languages use the keyword `super` (e.g., `super.setShield()`).
+    *   .NET languages (like C#) use the keyword `base`.
+    *   C++ requires the explicit name of the superclass because it allows for multiple inheritance.
+
+## Abstract and concrete classes
+
+*   **Abstract Class:**
+    *   A class that exists only to be inherited from; it **cannot be instantiated** on its own.
+    *   It must contain at least one **abstract method**—a method that is declared but not implemented. The implementation is left to the subclasses.
+    *   It can also contain fully implemented methods that are shared by all subclasses.
+    *   **UML Notation:** The names of abstract classes and abstract methods are written in *italics*.
+*   **Concrete Class:**
+    *   A class that can be instantiated.
+    *   A subclass that inherits from an abstract class and implements all of its abstract methods is a concrete class.
+*   **Keywords:**
+    *   Some languages (Java, C#) use keywords like `abstract` to enforce these rules.
+    *   The keyword `final` can be used to declare a class as concrete and prevent it from being inherited from.
+    *   The main benefit of these keywords is to clearly communicate the intended use of a class to other programmers.
+
+## Interfaces
+
+*   **Definition:** An interface is a programming structure that declares a set of method signatures but contains **no implementation**. It's a "contract" that a class can agree to fulfill.
+*   **Purpose:** An interface defines a **capability**. A class that *implements* an interface promises to provide the actual code for all the methods defined in that interface.
+*   **Interface vs. Abstract Class:**
+    *   An **abstract class** defines a *type* (an "is a" relationship). `CargoShuttle` is a `Spaceship`.
+    *   An **interface** defines a *capability*. An `Asteroid` is not a `Spaceship`, but both can be `Movable` and `Drawable`.
+    *   A class can only inherit from one superclass, but it can **implement multiple interfaces**.
+*   **UML Notation:**
+    *   An interface is shown in a box with an `<<interface>>` tag.
+    *   A class implementing an interface is connected with a **dashed line** and a large, open, wedge-shaped arrow.
+*   **Best Practice:** "Program to an interface, not to an implementation." This promotes flexibility and is often a more future-friendly approach than inheritance.
+
+## Aggregation
+
+*   **Definition:** A type of object relationship where one object is built from or contains other objects. It is known as a **"has a"** or **"uses a"** relationship.
+*   **Key Characteristic:** The contained objects have **independent lifetimes**. If the container object is destroyed, the objects it contains are not destroyed.
+*   **Example:** A `Fleet` *has many* `Spaceship`s. If the `Fleet` is disbanded, the individual `Spaceship`s continue to exist.
+*   **UML Notation:** A solid line with an **unfilled diamond** on the side of the container object.
+*   Multiplicity can be used to show how many objects are contained (e.g., `*` for zero to many).
+
+## Composition
+
+*   **Definition:** A stricter form of aggregation that implies **ownership**. It is a "is composed of" or **"owns a"** relationship.
+*   **Key Characteristic:** The contained objects' lifetimes are **dependent** on the owner object. If the owning object is destroyed, the contained objects are destroyed with it.
+*   **Example:** A `Spaceship` *is composed of* an `Engine` and a `Shield`. If the `Spaceship` is destroyed, its `Engine` and `Shield` are also destroyed.
+*   **UML Notation:** A solid line with a **filled-in diamond** on the side of the owning object.
+*   **Importance:** Composition is often worth showing in a diagram because it implies the owner is responsible for the creation and destruction of its parts (in its constructor and destructor).
+
+## Challenge: Jukebox class relationships
+
+*   **Scenario:** The final extension of the jukebox design challenge.
+*   **Task:** Identify the relationships (inheritance, interfaces, aggregation, composition) between the existing jukebox classes and modify the class diagrams to reflect them.
+*   **Goal:** This may require adding/removing attributes and methods or even creating new classes.
+
+## Solution: Jukebox class relationships
+
+*   **Inheritance:**
+    *   An `Admin` **is a** type of `User` with extra permissions.
+    *   **Action:** Create a `User` superclass. The `Admin` class becomes a subclass and inherits the `id` attribute and `getId()` method from `User`. This avoids code duplication.
+*   **Rejected Inheritance:**
+    *   They considered making `Library` and `Album` inherit from a common `Collection` class because they share similar "collection" behaviors.
+    *   **Decision:** They rejected this idea because it was an over-abstraction that added unnecessary complexity without providing significant benefit. This highlights that inheritance shouldn't be forced.
+*   **Aggregation:**
+    *   A `Library` **has** one or more `Album`s. (Aggregation)
+    *   An `Album` **has** one or more `Song`s. (Aggregation)
+    *   A `Queue` **has** zero or more `Song`s. (Aggregation)
+*   **Final Result:** The final class diagram incorporates these relationships, providing a solid, well-designed starting point for implementation. It is understood that this design may still evolve as coding begins.
+
+## Chapter Quiz
+
+**Question 1 of 16**
+Which relationship is a good candidate for superclass and subclass?
+
+*   **utensil-fork**
+    > _Feedback: Correct_
+*   tires-truck
+*   rock-stone
+*   toes-feet
+
+**Question 2 of 16**
+What does this line of Java code declare?
+```java
+public class Apple extends Fruit {
+```
+*   that Fruit is an abstract class
+*   a new class Fruit that is a child class of Apple
+*   **a new class Apple that is inherited from the class Fruit**
+    > _Feedback: Correct_
+*   that the Apple constructor should be used to create a Fruit object
+
+**Question 3 of 16**
+Why is the syntax for inheritance in C++ different from most other languages?
+
+*   **because a class can inherit from multiple levels in C++**
+    > _Feedback: Correct_
+*   because of sibling extensions in C++
+*   because of the abbreviated syntax priority in C++
+*   because C++ makes use of colons and semicolons instead of arrows and periods
+
+**Question 4 of 16**
+Which line of code will define a C# abstract class named School?
+
+*   `@@School {`
+*   `abstract School {`
+*   `class School {`
+*   **`abstract class School {`**
+    > _Feedback: Correct_
+
+**Question 5 of 16**
+Which concept of object-oriented programming is displayed by using the "is a kind of" comparison between 2 classes?
+
+*   **inheritance**
+    > _Feedback: Correct_
+*   abstraction
+*   encapsulation
+*   polymorphism
+
+**Question 6 of 16**
+A concrete class has no _____.
+
+*   parents
+*   attributes
+*   methods
+*   **children**
+    > _Feedback: Correct_
+
+**Question 7 of 16**
+Why would you create an abstract class, if it can have no real instances?
+
+*   **to avoid redundant coding in child classes**
+    > _Feedback: Correct_
+*   to prevent unwanted method implementation
+*   to reserve memory for an unspecified class type
+*   to explore a hypothetical class
+
+**Question 8 of 16**
+An aggregation is a _____.
+
+*   group of methods
+*   **collection of objects**
+    > _Feedback: Correct_
+*   class of resources
+*   list of children
+
+**Question 9 of 16**
+What form of aggregation implies ownership, and that the lifetime of an object is dependent on another object's existence?
+
+*   dependence
+*   inheritance
+*   **composition**
+    > _Feedback: Correct_
+*   abstraction
+
+**Question 10 of 16**
+How are the contents of a composition different from those of an aggregation?
+
+*   **If a composition dies, the contents die.**
+    > _Feedback: Correct_
+*   An aggregation contains only abstract classes.
+*   An aggregation consists of interfaces only.
+*   The contents of a composition are all siblings.
+
+**Question 11 of 16**
+In Java, how would you define an interface named Box that contains two methods named Open and Close that don't accept or return any variables?
+```java
+interface Box {
+    void Open();
+    void Close();
+```
+*   **Correct**
+*   ```java
+    class interface Box {
+        void Open();
+        void Close();
+    ```
+*   ```java
+    class Box implements interface {
+        void Open();
+        void Close();
+    ```
+*   ```java
+    class Box {
+        void Open();
+        void Close();
+    ```
+
+**Question 12 of 16**
+What do most languages have in common for referring to a method defined in the parent class?
+
+*   the use of : in the method name
+*   **the use of super in the prefix to the method name**
+    > _Feedback: Correct. The word `super` is used for the common need for code within a subclass, to call a method that was originally defined in the super class._
+*   specification of the parent class name in the method name
+*   specification of the instance name
+
+**Question 13 of 16**
+Why should you use abstract and final in class definitions?
+
+*   to allow instantiation
+*   to allow inheritance
+*   **to better communicate intentions**
+    > _Feedback: Correct. Their use makes the code easier to read and maintain._
+*   to define methods
+
+**Question 14 of 16**
+When is an interface used instead of an abstract class?
+
+*   when multiple constructors are used
+*   **when you need to describe the capabilities of a class**
+    > _Feedback: Correct_
+*   when parents are shared
+*   when multiple subclasses exist
+
+**Question 15 of 16**
+Which relationship between classes is referred to as a "has a" relationship?
+
+*   **aggregation**
+    > _Feedback: Correct_
+*   inheritance
+*   many-to-many
+*   one-to-many
+
+**Question 16 of 16**
+Which representation is correct UML for the interface Edible?
+
+*   ```
+    Edible <interface>
+    beEaten()
+    ```
+*   ```
+    <<interface>>
+    Edible
+    beEaten()
+    ```
+    > _Feedback: Correct. We represent an interface using a box that looks similar to a class, and include a tag with double angle quotes to indicate an interface._
+*   ```
+    Edible
+    beEaten()
+    ```
+*   ```
+    interface
+    Edible
+    ```
+
+---
