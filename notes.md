@@ -1625,3 +1625,142 @@ Which representation is correct UML for the interface Edible?
     ```
 
 ---
+
+# 7. Software Development
+
+## OOP support in different languages
+
+*   **Purpose:** To highlight the differences in how common object-oriented languages implement core OOP concepts. The underlying design principles remain the same regardless of the language.
+*   **Inheritance:**
+    *   **Single Inheritance:** Most languages (Java, C#, Swift) only allow a class to inherit from one superclass.
+    *   **Multiple Inheritance:** C++ and Python allow a class to inherit from more than one superclass.
+    *   **Mixins (Ruby):** A feature that allows combining objects, which can be seen as a form of composition.
+    *   **Prototypes (JavaScript):** JavaScript is less formal and doesn't use classes. It uses prototypes, allowing for more dynamic objects where properties can be added or removed at runtime.
+*   **Typing:**
+    *   **Statically Typed (most compiled languages):** The data type of all variables must be specified by the developer at compile time.
+    *   **Dynamically Typed (most scripting languages like Python, Ruby, JS):** The type of a variable does not need to be specified. This allows for faster, more flexible development but can make bug-tracking more difficult.
+*   **Interfaces:**
+    *   Not supported in languages that are dynamically typed (Python, Ruby, JS) or that allow multiple inheritance (C++).
+    *   In these languages, a similar concept can be implemented using an abstract class with only abstract methods.
+*   **Language Variations:**
+    *   Many variations exist that combine features, like **Jython** (Python on the Java platform) and **TypeScript** (a statically-typed version of JavaScript).
+
+## General development principles
+
+*   **SOLID Principles:** A set of five interrelated principles to make software more understandable, flexible, and maintainable.
+    *   **Single Responsibility Principle:** A class should have only one primary responsibility, one reason to exist. This warns against creating "God objects" that do too many unrelated things. Big classes should be split into smaller, more focused ones.
+*   **DRY (Don't Repeat Yourself):**
+    *   Avoid copying and pasting large sections of code. If a mistake is found, it will have to be fixed in every copied location.
+    *   This principle also applies to documentation, diagrams, and database schemas. There should be a single source of truth.
+*   **YAGNI (You Ain't Gonna Need It):**
+    *   Avoid over-engineering and adding features or hooks for every possible future scenario.
+    *   Abstracting too much leads to code bloat, more testing, and more debugging for features that may never be used.
+*   **Code Smells:**
+    *   These are indicators of potential problems in code. The code might compile and work, but something "doesn't pass the sniff test" (e.g., duplicated code, God objects, unnecessary complexity).
+    *   **Static analysis tools** can plug into an IDE to automatically detect some of these code smells.
+
+## Software testing
+
+*   **Importance of Testing:**
+    *   It's not enough to test that the software meets requirements. You must also test for unexpected user behavior.
+    *   Users may misunderstand instructions, make typos, or maliciously try to break the application.
+*   **Usability Considerations:**
+    *   Software should be intuitive and provide clear guidance.
+    *   **Example:** If a phone number input field requires dashes, but the user enters only numbers, the application should handle it gracefully and provide helpful error messages, not just reject the input.
+*   **Automated Testing:**
+    *   Manually testing every scenario repeatedly is tedious and impractical.
+    *   **Automated unit tests and system tests** are invaluable. They can be run repeatedly to ensure that changes and new features haven't broken existing functionality.
+*   **Refactoring and Regression:**
+    *   **Refactoring** (improving the internal structure of code without changing its external behavior) is a natural part of software maintenance.
+    *   A common problem is that refactoring can introduce **regressions**—bugs in features that previously worked.
+    *   A well-established automated testing system is crucial for catching regressions before they reach the user.
+
+## Design patterns
+
+*   **Definition:** Common, repeatable, and proven solutions for solving recurring software design problems. They are templates or best practices, not exact lines of code.
+*   **Purpose:** To help structure code in a smart, flexible, maintainable, and extensible way, reducing the need for major refactoring later.
+*   **Example Scenarios:**
+    *   **Problem:** The game hard-codes which enemy ships appear. Adding new types is difficult.
+    *   **Pattern:** The **Factory Method** pattern could provide a structured way to instantiate different types of objects based on context (like the current level).
+    *   **Problem:** A "rewind" feature is requested to restore the game to a previous state.
+    *   **Pattern:** The **Memento** pattern outlines a proven approach for saving and restoring an object's state.
+*   **"Gang of Four" (GoF) Book:**
+    *   The seminal book *Design Patterns* by four authors introduced 23 design patterns, organized into three groups:
+        1.  **Creational Patterns:** Focus on object instantiation, providing flexibility in how objects are created (e.g., Factory Method).
+        2.  **Structural Patterns:** Describe how classes are designed using concepts like inheritance and composition to add functionality.
+        3.  **Behavioral Patterns:** Concerned with communication between objects (e.g., Memento).
+*   **Recommended Reading:** *Design Patterns* (GoF) and *Head First Design Patterns*.
+
+## Chapter Quiz
+
+**Question 1 of 8**
+You have developed an application with three classes of objects. One of the classes has 50 subclasses. What would style critics call this class?
+
+*   a bloat class
+*   **a god object**
+    > _Feedback: Correct. God objects do a lot of things that are not related to each other, and you should consider breaking up the class into two or more classes._
+*   a parent
+*   a super object
+
+**Question 2 of 8**
+Which group of design patterns describes how inheritance and aggregation can be used to provide additional functionality?
+
+*   **structural**
+    > _Feedback: Correct_
+*   creational
+*   behavioral
+*   defining
+
+**Question 3 of 8**
+Why should one use a design pattern when possible?
+
+*   It will enable the use of shared code.
+*   **It will likely result in code that is more easily extensible and maintainable.**
+    > _Feedback: Correct_
+*   It will result in a more compact product.
+*   It will speed initial development.
+
+**Question 4 of 8**
+How does dynamic typing hinder troubleshooting?
+
+*   The dynamic variables can only assume limited values.
+*   Storage is fixed for dynamic variables.
+*   **It can be difficult to identify variables that are incorrectly typed.**
+    > _Feedback: Correct_
+*   Static variables are more flexible than dynamic variables.
+
+**Question 5 of 8**
+What is an example of a code smell?
+
+*   not using enough abstraction
+*   strong documentation
+*   distributing work among many classes
+*   **duplicate code**
+    > _Feedback: Correct_
+
+**Question 6 of 8**
+Why is code duplication so insidious?
+
+*   The duplication uses unnecessary space.
+*   Duplication can cause intellectual property concerns.
+*   **One has to maintain all the duplicates.**
+    > _Feedback: Correct_
+*   Duplication is easy to hide.
+
+**Question 7 of 8**
+What is a good way to help users navigate a software application?
+
+*   creating a chat room so users can communicate with each other
+*   **providing proper error messages and prompts**
+    > _Feedback: Correct_
+*   asking the user to enter redundant information
+*   making sure that the application is secure
+
+**Question 8 of 8**
+Which language is compiled and is statically typed?
+
+*   Python
+*   Ruby
+*   JavaScript
+*   **C++**
+    > _Feedback: Correct_
